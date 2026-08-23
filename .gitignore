@@ -1,0 +1,11 @@
+# Private content — never reaches GitHub
+Private/
+
+# Planning and design reasoning — private
+.docs/
+
+# Scratch and reference material — private
+.tmp/
+
+# Local Obsidian configuration
+.obsidian/
