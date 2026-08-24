@@ -22,9 +22,10 @@ This vault is a shared memory layer for a human and their AI agents. It is an Ob
 | `Private/Drafts/<Category>/` | AI staging area | agent authors; human promotes |
 | `_schema/` | this contract | human edits; agent reads |
 | `_templates/` | note templates | human edits; agent reads |
+| `_assets/` | public attachments (images, files) | human and agent, alongside the notes that embed them |
 | `.agents/` `.docs/` `.tmp/` `.obsidian/` | local meta | ignore |
 
-A top-level folder is a **category** only if its name has no leading `.` or `_`.
+A top-level folder is a **category** only if its name has no leading `.` or `_` **and** it is listed in `_schema/categories.md`. The list is the publication boundary: an unlisted folder is eligible but never rendered by the site.
 
 ## Categories
 
@@ -34,7 +35,7 @@ Exactly one per content note, expressed by the folder it lives in:
 - **Project** — ongoing work with a goal and status.
 - **Log** — a short-to-medium dated entry, chained to the one before it.
 
-**Logs are chained**: each log's `previous` field links the log immediately before it. Logs may also wikilink any earlier log by reference.
+**Logs are daily and chained**: one log per day, filename `YYYY-MM-DD.md`. Each log's `previous` field links the log with the latest earlier date; the first log omits the field entirely. Logs may also wikilink any earlier log by reference.
 
 ## Front-matter
 
@@ -43,14 +44,13 @@ Required on every content note:
 ```yaml
 origin: human | agent   # who authored it
 created: YYYY-MM-DD     # creation date
-updated: YYYY-MM-DD     # last change
 tags: []                # Obsidian tags (may be empty)
 ```
 
 `Logs` additionally require:
 
 ```yaml
-previous: "[[Prior log]]"   # wikilink to the immediately preceding log (omit on the first)
+previous: "[[YYYY-MM-DD]]"  # wikilink to the log with the latest earlier date; omit the field entirely on the first log
 ```
 
 Templates default `origin` to `human`; when an agent authors a draft, it sets `origin: agent`.
@@ -59,15 +59,17 @@ Templates default `origin` to `human`; when an agent authors a draft, it sets `o
 
 1. Human writes directly into the matching category folder.
 2. Agent authors new content into `Private/Drafts/<Category>/`.
-3. Human reviews a draft and **promotes** it: move the file into the matching public category folder, refresh `updated`, and keep `origin: agent`.
-4. Agent may maintain the wiki — find missing links, fix formatting, validate front-matter — but never authors into public categories directly. Bump `updated` whenever it changes a note.
+3. Human reviews a draft and **promotes** it: move the file into the matching public category folder and keep `origin: agent`.
+4. Agent may maintain the wiki — find missing links, fix formatting, validate front-matter — but never authors into public categories directly.
 
 ## Lint checklist
 
 Run these checks after any edit:
 
-- [ ] Every content note has valid front-matter (`origin`, `created`, `updated`, `tags`; `previous` for logs).
+- [ ] Every content note has valid front-matter (`origin`, `created`, `tags`; `previous` for logs).
 - [ ] No public note links into `Private/`.
-- [ ] Every log except the first has a `previous` pointing to the immediately preceding log.
-- [ ] No content note lives outside the three category folders or `Private/`.
+- [ ] Every log is named `YYYY-MM-DD.md` (one per day) and, except the first, has a `previous` pointing to the log with the latest earlier date.
+- [ ] No content note lives outside the listed category folders or `Private/`.
+- [ ] Every top-level folder without a leading `.`/`_` is listed in `_schema/categories.md`.
+- [ ] Attachments referenced by notes live in `_assets/`.
 - [ ] Nothing under `Private/Personal/` was touched.

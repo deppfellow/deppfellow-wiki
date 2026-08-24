@@ -1,7 +1,6 @@
 ---
 origin: human
 created: {{date}}
-updated: {{date}}
 tags: []
 ---
 
