@@ -1,0 +1,8 @@
+filters:
+  and:
+    - file.path.startsWith("Private")
+views:
+  - type: table
+    name: Table
+  - type: table
+    name: Private Source
