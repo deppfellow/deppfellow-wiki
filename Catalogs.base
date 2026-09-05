@@ -6,3 +6,6 @@ views:
     name: Table
   - type: table
     name: Private Source
+    filters:
+      and:
+        - author == ["Wanderloots"]

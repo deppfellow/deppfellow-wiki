@@ -1,6 +1,6 @@
 ---
-origin: human
-created: {{date}}
+origin: human | agent[model]
+created: { { date } }
 tags: []
 ---
 
