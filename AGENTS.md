@@ -34,5 +34,5 @@ Table below show allowlist path, for agents allowed to inspect external componen
 | --- | --- | --- |
 | Nix's dotfiles | Nix dotfiles configuration used in this environment | `~/dotfiles` |
 | deppfellow-page | Site code repository displaying public articles of this Wiki | `~/workspace/projects/deppfellow-page` |
-| bridgekeeper | Personal orchestration substrate: `bk` (gates) + `tdg` (shim), formerly `wf` | `~/workspace/projects/bridgekeeper` |
+| bridgekeeper | Personal orchestration substrate: `bk` (gates) + `tdg` (shim) | `~/workspace/projects/bridgekeeper` |
 | td | Go-binary, minimalist CLI for tracking tasks across AI coding sessions | `~/workspace/projects/td` |
