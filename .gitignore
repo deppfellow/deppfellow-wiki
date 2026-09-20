@@ -6,6 +6,8 @@ Private/
 
 # Scratch and reference material — private
 .tmp/
+.memory/
 
 # Local Obsidian configuration
 .obsidian/
+.obsidian.backup/
