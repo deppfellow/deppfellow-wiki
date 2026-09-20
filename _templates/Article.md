@@ -1,5 +1,5 @@
 ---
-origin: human | agent[model]
+description: {{Article's brief description}}
 created: { { date } }
 tags: []
 ---

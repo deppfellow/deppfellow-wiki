@@ -1,5 +1,5 @@
 ---
-origin: human
+origin: {{Logs' brief description}}
 created: {{date}}
 tags: []
 ---

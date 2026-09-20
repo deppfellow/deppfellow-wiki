@@ -1,5 +1,5 @@
 ---
-origin: human
+description: {{Project's brief description}}
 created: {{date}}
 tags: []
 ---
