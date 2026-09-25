@@ -14,11 +14,13 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     env:
-      TOKEN: ${{ secrets.SITE_DISPATCH_TOKEN }}
+      # gh refuses to run without GH_TOKEN in the environment; an explicit
+      # Authorization header does not satisfy it (exit 4 in Actions).
+      GH_TOKEN: ${{ secrets.SITE_DISPATCH_TOKEN }}
     steps:
       - name: Fail loudly if the dispatch secret is missing
         run: |
-          if [ -z "$TOKEN" ]; then
+          if [ -z "$GH_TOKEN" ]; then
             echo "::error::Secret SITE_DISPATCH_TOKEN is not set on this repository. Wiki pushes will not rebuild the site until it exists. See .github/workflows/README.md for setup."
             exit 1
           fi
@@ -29,7 +31,6 @@ jobs:
         run: |
           gh api \
             --method POST \
-            -H "Authorization: Bearer $TOKEN" \
             repos/deppfellow/deppfellow.github.io/dispatches \
             -f event_type=wiki-published \
             -f "client_payload[ref]=$GITHUB_REF" \
