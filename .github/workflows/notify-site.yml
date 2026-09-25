@@ -1,0 +1,36 @@
+# Sender half of the publish trigger: fires the site repo's build on every wiki
+# push. Pairing receiver: .github/workflows/build.yml in deppfellow.github.io,
+# which declares the same event_type (wiki-published).
+name: Notify site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    env:
+      TOKEN: ${{ secrets.SITE_DISPATCH_TOKEN }}
+    steps:
+      - name: Fail loudly if the dispatch secret is missing
+        run: |
+          if [ -z "$TOKEN" ]; then
+            echo "::error::Secret SITE_DISPATCH_TOKEN is not set on this repository. Wiki pushes will not rebuild the site until it exists. See .github/workflows/README.md for setup."
+            exit 1
+          fi
+
+      # Target is the post-rename canonical repo per ADR-0011; the dispatch
+      # fails loudly until that rename lands (T17).
+      - name: Fire repository_dispatch on the site repo
+        run: |
+          gh api \
+            --method POST \
+            -H "Authorization: Bearer $TOKEN" \
+            repos/deppfellow/deppfellow.github.io/dispatches \
+            -f event_type=wiki-published \
+            -f "client_payload[ref]=$GITHUB_REF" \
+            -f "client_payload[source]=$GITHUB_REPOSITORY"
