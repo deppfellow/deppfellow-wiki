@@ -1,9 +1,9 @@
 ---
 description: {{Article's brief description}}
-created: { { date } }
+created: <% tp.date.now("yyyy-MM-DD") %>
 tags: []
 ---
 
-# {{title}}
+# <% tp.file.title %>
 
 <!-- Long-form finished writing. Link related notes with [[wikilinks]]. -->

@@ -1,15 +1,15 @@
 ---
 description: {{Project's brief description}}
-created: {{date}}
+created: <% tp.date.now("yyyy-MM-DD") %>
 tags: []
 ---
 
-# {{title}}
+# <% tp.file.title %>
 
 ## Status
 <!-- idea / active / paused / done -->
 
-## Goal
+## Objective
 <!-- one or two sentences -->
 
 ## Notes
